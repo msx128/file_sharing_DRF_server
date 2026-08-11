@@ -1,0 +1,2 @@
+it can't show jap characters, but I can download it via wget and in my editor it looks ok, mb browser problem
+
