@@ -32,7 +32,7 @@ class TestFiles:
             reverse('files'),
             {'file': uploaded_file},
         )
-        assert response.status_code == 403
+        assert response.status_code == 401
         assert not File.objects.all().exists()
 
     def test_authenticated_invalid_create_file(self, api_client, user):
@@ -121,7 +121,7 @@ class TestFiles:
         response = api_client.delete(
             reverse('file_details', args=[file_obj.id])
         )
-        assert response.status_code == 403
+        assert response.status_code == 401
         assert File.objects.all().exists()
 
     def test_title_extention_extration(self, api_client, user):

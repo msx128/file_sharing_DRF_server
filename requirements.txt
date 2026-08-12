@@ -4,3 +4,4 @@ djangorestframework
 psycopg[binary]
 pytest
 pytest-django[django]
+djangorestframework-simplejwt
