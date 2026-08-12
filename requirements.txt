@@ -2,3 +2,5 @@ python-dotenv
 django
 djangorestframework
 psycopg[binary]
+pytest
+pytest-django[django]

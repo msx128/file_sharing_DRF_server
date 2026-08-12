@@ -1,0 +1,7 @@
+[tool.pytest]
+DJANGO_SETTINGS_MODULE = "file_sharing.settings"
+python_files = ["test.py", "tests.py", "test_*.py", "*_tests.py"]
+addopts = [
+  "--import-mode=importlib",
+]
+
