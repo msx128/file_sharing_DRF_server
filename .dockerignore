@@ -1,0 +1,12 @@
+.env*
+.git*
+.pytest_cache
+.venv
+README.md
+tests
+__pycache__
+dev.fish
+docker-compose.yml
+pyproject.toml
+thoughts.txt
+*.pyc

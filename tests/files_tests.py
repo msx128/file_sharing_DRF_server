@@ -195,3 +195,6 @@ class TestFiles:
         )
         assert response.status_code == 201
         assert File.objects.filter(user=user).count() == 2
+
+# maybe I should have made helper functions for repetative code
+# but I don't
