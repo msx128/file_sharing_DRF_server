@@ -2,3 +2,5 @@
 *.pyc
 media/filebase
 .env
+garage/meta
+garage/data

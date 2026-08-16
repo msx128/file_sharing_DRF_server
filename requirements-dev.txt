@@ -1,1 +1,0 @@
-django-stubs need mypy for that configure later

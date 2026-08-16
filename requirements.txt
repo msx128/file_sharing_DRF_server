@@ -5,3 +5,5 @@ psycopg[binary]
 pytest
 pytest-django[django]
 djangorestframework-simplejwt
+django-storages
+boto3
