@@ -153,7 +153,7 @@ STORAGES = {
         'OPTIONS': {
             'bucket_name': 'allpurpose-bucket',
             'region_name': 'garage',
-            'endpoint_url': 'http://garage:3900',
+            'endpoint_url': 'http://garage.localhost',
             'access_key': os.getenv('GARAGE_KEY_ID'),
             'secret_key': os.getenv('GARAGE_KEY_SECRET'),
             'addressing_style': 'path',

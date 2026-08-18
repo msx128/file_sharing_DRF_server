@@ -1,5 +1,9 @@
 services:
   web:
+    # djnago need to somehow reach garage.localhost
+    # right now this works on my pc, but I doubt it's consistency
+    # the bad thing is I couldn't figure any solution to this
+    # maybe this is my super specific problem or probaly django-storages issue
     build: .
     depends_on:
       - postgres
