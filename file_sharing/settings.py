@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-(!z=n+tfs8!^xbe&@i)f*9=2@1m#umw$8nl_(t++4g9iouc(7a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -142,7 +142,24 @@ MEDIA_ROOT = BASE_DIR / 'media'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         # uncommnet to enable authentication in rest browsable api
     )
+}
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'storages.backends.s3.S3Storage',
+        'OPTIONS': {
+            'bucket_name': 'allpurpose-bucket',
+            'region_name': 'garage',
+            'endpoint_url': 'http://garage:3900',
+            'access_key': os.getenv('GARAGE_KEY_ID'),
+            'secret_key': os.getenv('GARAGE_KEY_SECRET'),
+            'addressing_style': 'path',
+        }
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+    },
 }

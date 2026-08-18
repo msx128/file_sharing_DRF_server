@@ -10,3 +10,5 @@ docker-compose.yml
 pyproject.toml
 thoughts.txt
 *.pyc
+garage
+garage.toml

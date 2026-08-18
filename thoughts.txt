@@ -2,4 +2,6 @@ it can't show jap characters, but I can download it via wget and in my editor it
 again instead of coding something myself, there is a library to do this.
 like I should literally make another server with similar logic in rust so I could understand more deeply this concepts and this is not what I wanted
 I should make a sepparate storage server using nginx and s3 or something
+the problem is not the url but all of it. we can't use garage host to access files outside docker obviusly
+I need to proxy it somehow, maybe this is why people using nginx + s3
 
