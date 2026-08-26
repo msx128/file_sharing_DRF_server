@@ -151,7 +151,7 @@ STORAGES = {
     'default': {
         'BACKEND': 'storages.backends.s3.S3Storage',
         'OPTIONS': {
-            'bucket_name': 'allpurpose-bucket',
+            'bucket_name': os.getenv('GARAGE_BUCKET_NAME'),
             'region_name': 'garage',
             'endpoint_url': 'http://garage.localhost',
             'access_key': os.getenv('GARAGE_KEY_ID'),
