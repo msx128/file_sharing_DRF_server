@@ -1,8 +1,9 @@
-from django.urls import reverse
 import pytest
+from django.urls import reverse
+
 
 @pytest.mark.django_db
-class TestUsers():
+class TestUsers:
     def test_get_users(self, api_client):
         response = api_client.get(
             reverse('users'),
