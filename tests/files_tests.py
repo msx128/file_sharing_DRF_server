@@ -81,7 +81,6 @@ class TestFiles:
         api_client.force_authenticate(user=user)
         response = response_on_post(api_client, uploaded_file)
         assert response.status_code == 201
-        file_obj = File.objects.get(user=user)
         api_client.force_authenticate(user=userB)
         response_on_get(api_client)
         assert response.status_code == 200
