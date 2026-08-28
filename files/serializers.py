@@ -8,10 +8,10 @@ class FileSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
     class Meta:
         model = File
-        fields = ['id','user', 'created', 'file', 'size', 'title', 'extention']
+        fields = ['id','user', 'created', 'file', 'size', 'title', 'extension']
         # id and created is read-only by default
         # don't know if it illogical to keep them in fileds
-        read_only_fields = ['size', 'title', 'extention', 'id']
+        read_only_fields = ['size', 'title', 'extension', 'id']
 
     def create(self,validated_data):
         validated_data['user'] = self.context['request'].user

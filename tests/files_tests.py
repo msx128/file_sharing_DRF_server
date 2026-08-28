@@ -4,11 +4,12 @@ from django.urls import reverse
 
 from files.models import File
 
+
 def response_on_get(api_client):
     return api_client.get(reverse('files'))
 
 def response_on_post(api_client, uploaded_file):
-    return api_client.post(reverse('files'), {'file', uploaded_file})
+    return api_client.post(reverse('files'), {'file': uploaded_file})
 
 def response_on_delete(api_client, id): 
     return api_client.delete(reverse('file_details', args=[id]))

@@ -8,8 +8,6 @@ garage key create <key_name> -> copy key_id and key_seckret_key to env
 garage bucket allow --read --write --owner <bucket_name> --key <key_name>
 need to somehow snatch node id and key values
 python manage.py createsuperuser
-add file remover from s3 when deleting [x]
-how to make last test comment []
-remove localhost from traefik entyerly so no funny busyness [x]
-change /etc/hosts when finished []
 add readme []
+add more tests if have vibes
+change /etc/hosts when finished

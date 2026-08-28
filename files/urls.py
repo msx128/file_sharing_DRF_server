@@ -9,6 +9,7 @@ urlpatterns = format_suffix_patterns([
     path('files/<int:pk>', views.FileDetailView.as_view(), name='file_details'),
     path('users', views.UserView.as_view(), name='users'),
     path('users/<int:pk>', views.UserDetailView.as_view(), name='user_details'),
+    path('logout', views.LogoutAPIView.as_view(), name='logout'),
  ])
 urlpatterns += [
     path('auth', include('rest_framework.urls')),

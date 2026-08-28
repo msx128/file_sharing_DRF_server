@@ -1,7 +1,7 @@
-from django.core.files.uploadedfile import SimpleUploadedFile
-import pytest
 import boto3
+import pytest
 from django.contrib.auth.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework.test import APIClient
 
 

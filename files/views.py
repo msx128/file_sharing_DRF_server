@@ -1,9 +1,10 @@
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.views import APIView
 import logging
-
 from typing import override
 
 from django.contrib.auth.models import User
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -53,6 +54,7 @@ class FileDetailView(generics.RetrieveDestroyAPIView):
             try:
                 instance.file.delete(save=False)
         # same as instance.file.storage.delete(instance.file.name)
+        # preferable to add some tracking solution which would queue deletion on failure
             except Exception as e:
                 logger.error(f"Failed to delete file from S3: {e}")
         return super().perform_destroy(instance) # <- this whould delete postgres instance
@@ -64,3 +66,18 @@ class UserView(generics.ListAPIView):
 class UserDetailView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+
+class LogoutAPIView(APIView):
+    def post(self, request):
+        refresh_token = request.data.get('refresh')
+
+        if refresh_token:
+            try:
+                token = RefreshToken(refresh_token)
+                token.blacklist()
+                return Response({'detail': 'Successfully logged out.'}, status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response({'detail': 'Invalid refresh token.'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'detail': 'Refreash token not provided.'}, status=status.HTTP_400_BAD_REQUEST)
+            
