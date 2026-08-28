@@ -9,5 +9,6 @@ garage bucket allow --read --write --owner <bucket_name> --key <key_name>
 need to somehow snatch node id and key values
 python manage.py createsuperuser
 add readme []
+not forget to add this setup in readme []
 add more tests if have vibes
 change /etc/hosts when finished
