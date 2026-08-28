@@ -8,12 +8,16 @@ services:
     depends_on:
       - postgres
     volumes:
-      - .:/app
+      - ./files:/app/files
+      - ./file_sharing:/app/file_sharing
+      - ./.env:/app/.env
     networks:
       - proxy
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.web.rule=Host(`localhost`)"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.web.rule=Host(`site.test`)"
       - "traefik.http.routers.web.entrypoints=web"
       - "traefik.http.services.web.loadbalancer.server.port=8000"
     environment:
@@ -22,7 +26,10 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    command: python manage.py runserver 0.0.0.0:8000
+      - GARAGE_BUCKET_NAME=${GARAGE_BUCKET_NAME}
+      - GARAGE_KEY_ID=${GARAGE_KEY_ID}
+      - GARAGE_KEY_SECRET=${GARAGE_KEY_SECRET}
+    command: sh -c "/app/.venv/bin/python manage.py migrate && /app/.venv/bin/python manage.py runserver 0.0.0.0:8000"
   postgres:
     image: postgres:18.6
     container_name: py_postgres
@@ -48,7 +55,8 @@ services:
       - proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.garage.rule=Host(`garage.localhost`)"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.garage.rule=Host(`garage.site.test`)"
       - "traefik.http.routers.garage.entrypoints=web"
       - "traefik.http.services.garage.loadbalancer.server.port=3900"
     environment:
@@ -65,7 +73,7 @@ services:
       - proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.api.rule=Host(`traefik.site.test`)"
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.entrypoints=web"
     command:

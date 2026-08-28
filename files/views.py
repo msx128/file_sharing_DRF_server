@@ -1,15 +1,20 @@
+import logging
+
 from typing import override
-from django.shortcuts import render
+
 from django.contrib.auth.models import User
-from rest_framework.reverse import reverse
+from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import generics, permissions
-from files.serializers import FileSerializer, UserSerializer
+from rest_framework.reverse import reverse
+
 from files.models import File
 from files.permissions import IsOwnerOrReadOnly
+from files.serializers import FileSerializer, UserSerializer
 
 # Create your views here.
+
+logger = logging.getLogger(__name__)
 
 @api_view(['GET'])
 def api_root(request, format=None):
@@ -41,6 +46,16 @@ class FileDetailView(generics.RetrieveDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     serializer_class = FileSerializer
     queryset = File.objects.all()
+
+    @override
+    def perform_destroy(self, instance):
+        if instance.file:
+            try:
+                instance.file.delete(save=False)
+        # same as instance.file.storage.delete(instance.file.name)
+            except Exception as e:
+                logger.error(f"Failed to delete file from S3: {e}")
+        return super().perform_destroy(instance) # <- this whould delete postgres instance
 
 class UserView(generics.ListAPIView):
     serializer_class = UserSerializer

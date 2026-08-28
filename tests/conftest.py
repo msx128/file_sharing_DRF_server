@@ -1,5 +1,6 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 import pytest
+import boto3
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 
@@ -16,11 +17,15 @@ def user():
 def userB():
     return User.objects.create_user(username='anna', password='123')
 
+@pytest.fixture()
+def s3_client():
+    return boto3.client('s3')
+
 @pytest.fixture(autouse=True)
 def check_s3_cleanup(s3_client):
-    before = s3_client.list_objects(Bucket='test-bucket')
+    before = s3_client.list_objects(Bucket='allpurpose-bucket')
     yield
-    after = s3_client.list_objects(Bucket='test-bucket')
+    after = s3_client.list_objects(Bucket='allpurpose-bucket')
     assert before == after, "Test left files in s3"
 
 @pytest.fixture

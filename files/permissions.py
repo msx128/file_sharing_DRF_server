@@ -1,5 +1,7 @@
 from typing import override
+
 from rest_framework import permissions
+
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     @override

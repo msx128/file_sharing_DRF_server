@@ -1,4 +1,4 @@
-use uv python package manager next time
+use uv python package manager from the start next time
 garage status
 garage status -> copy node_id
 garage layout assign -z <node_name> -c <capacity> <node_id>
@@ -8,6 +8,8 @@ garage key create <key_name> -> copy key_id and key_seckret_key to env
 garage bucket allow --read --write --owner <bucket_name> --key <key_name>
 need to somehow snatch node id and key values
 python manage.py createsuperuser
-remake tests
-add file remover from s3 when deleting
-add readme
+add file remover from s3 when deleting [x]
+how to make last test comment []
+remove localhost from traefik entyerly so no funny busyness [x]
+change /etc/hosts when finished []
+add readme []

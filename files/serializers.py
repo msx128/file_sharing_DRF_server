@@ -1,6 +1,8 @@
-from rest_framework import serializers
-from files.models import File
 from django.contrib.auth.models import User
+from rest_framework import serializers
+
+from files.models import File
+
 
 class FileSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
@@ -9,7 +11,11 @@ class FileSerializer(serializers.ModelSerializer):
         fields = ['id','user', 'created', 'file', 'size', 'title', 'extention']
         # id and created is read-only by default
         # don't know if it illogical to keep them in fileds
-        read_only_fields = ['size', 'title', 'extention']
+        read_only_fields = ['size', 'title', 'extention', 'id']
+
+    def create(self,validated_data):
+        validated_data['user'] = self.context['request'].user
+        return File.objects.create(**validated_data)
         
 class UserSerializer(serializers.ModelSerializer):
     files = serializers.PrimaryKeyRelatedField(

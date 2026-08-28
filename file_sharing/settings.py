@@ -10,13 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
-from pathlib import Path
 import os
-from dotenv import load_dotenv, dotenv_values
+from pathlib import Path
+from dotenv import load_dotenv   
 
-_ = load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,12 +29,13 @@ SECRET_KEY = 'django-insecure-(!z=n+tfs8!^xbe&@i)f*9=2@1m#umw$8nl_(t++4g9iouc(7a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web', 'site.test']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'storages',
     'files',
     'rest_framework',
     'django.contrib.admin',
@@ -143,17 +144,16 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        # uncommnet to enable authentication in rest browsable api
+        # commnet to disenable authentication in rest browsable api
     )
 }
-
 STORAGES = {
     'default': {
         'BACKEND': 'storages.backends.s3.S3Storage',
         'OPTIONS': {
             'bucket_name': os.getenv('GARAGE_BUCKET_NAME'),
             'region_name': 'garage',
-            'endpoint_url': 'http://garage.localhost',
+            'endpoint_url': 'http://garage.site.test',
             'access_key': os.getenv('GARAGE_KEY_ID'),
             'secret_key': os.getenv('GARAGE_KEY_SECRET'),
             'addressing_style': 'path',
